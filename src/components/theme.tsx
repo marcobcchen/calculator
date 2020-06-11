@@ -3,6 +3,7 @@ import { createMuiTheme } from '@material-ui/core/styles'
 declare module '@material-ui/core/styles/createPalette' {
   interface CommonColors {
     orange: string
+    lightGreen: string
   }
 }
 
@@ -21,25 +22,28 @@ declare module '@material-ui/core/styles/createMuiTheme' {
 }
 
 const customOrange = '#f38844'
+const customLightGreen = '#ddd'
 
 const theme = createMuiTheme({
   palette: {
     common: {
       orange: customOrange,
+      lightGreen: customLightGreen,
     }
   },
   custom: {
     btn: {
-      padding: 0,
-      paddingBottom: '100%',
+      position: 'absolute',
+      left: 0,
+      top: 0,
       width: '100%',
-      borderRadius: '50%',
+      height: '100%',
+      borderRadius: '999px',
       border: 0,
       fontWeight: 'bold',
-      fontSize: '1rem',
-      
+      fontSize: '2rem',
     }
-  }
+  },
 })
 
 export default theme
