@@ -45,7 +45,7 @@ interface IBaseButton{
   name: string
   background: string
   size?: string
-  setClickValue: (value: string) => void
+  onClick: (value: string) => void
 }
 
 const BaseButton = (props:IBaseButton) => {
@@ -65,7 +65,7 @@ const BaseButton = (props:IBaseButton) => {
           props.background === 'orange' ? classes.orangeBtn : undefined 
         }
         classes={{root: classes.rootBtn}}
-        onClick={() => props.setClickValue(props.name)}
+        onClick={() => props.onClick(props.name)}
       >
         {props.name}
       </Button>

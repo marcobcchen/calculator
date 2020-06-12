@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import theme from './theme'
 import BaseButton from './common/BaseButton'
 import Count from './common/Count'
-import { stringConcat, isNumber } from './common/logic'
+import { stringConcat, isNumber, add, cancel } from './common/logic'
 
 const usetStyles = makeStyles(theme => ({
   container: {
@@ -25,31 +25,32 @@ const usetStyles = makeStyles(theme => ({
   }
 }))
 
-
 const Calculator = () => {
   const classes = usetStyles()
-  const [clickValue, setClickValue] = useState('0')
   const [result, setResult] = useState('0')
   
-  useEffect(() => {
-    console.log(clickValue)
-    // if(isNumber(clickValue)) valueAry.push(clickValue) 
-    // if(clickValue === 'C') {
-    //   valueAry = ['0']
-    // }
-    
-    // console.log(valueAry)
-    // const text = stringConcat(valueAry)
-    // setResult(text)
-  }, [clickValue])
+  const reset = () => {
+    cancel()
+    setResult('0')
+  }
 
-  useEffect(() => {
-    setClickValue(result)
-  }, [result])
+  const formual = (value: string) => {
+    switch (value){
+      case 'C':
+        reset()
+        break
+      case '+':
+        add('test')
+        break
+      case '=':
+        // setResult(add(result))
+        break
+    }
+  }
 
-  const addString = (value: string) => {
-    if(isNumber(value)) {
-      setResult(stringConcat(value))
+  const combiString = (num: string) => {
+    if(isNumber(num)) {
+      setResult(stringConcat(num, result))
     }
   }
 
@@ -61,65 +62,65 @@ const Calculator = () => {
         </Grid>
         <Grid item container xs={9}>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'C'} background={'lightGrey'} setClickValue={setClickValue} />
+            <BaseButton name={'C'} background={'lightGrey'} onClick={formual} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'+/-'} background={'lightGrey'} setClickValue={setClickValue} />
+            <BaseButton name={'+/-'} background={'lightGrey'} onClick={formual} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'%'} background={'lightGrey'} setClickValue={setClickValue} />
+            <BaseButton name={'%'} background={'lightGrey'} onClick={formual} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'7'} background={'grey'} setClickValue={addString} />
+            <BaseButton name={'7'} background={'grey'} onClick={combiString} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'8'} background={'grey'} setClickValue={addString} />
+            <BaseButton name={'8'} background={'grey'} onClick={combiString} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'9'} background={'grey'} setClickValue={addString} />
+            <BaseButton name={'9'} background={'grey'} onClick={combiString} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'4'} background={'grey'} setClickValue={addString} />
+            <BaseButton name={'4'} background={'grey'} onClick={combiString} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'5'} background={'grey'} setClickValue={addString} />
+            <BaseButton name={'5'} background={'grey'} onClick={combiString} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'6'} background={'grey'} setClickValue={addString} />
+            <BaseButton name={'6'} background={'grey'} onClick={combiString} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'1'} background={'grey'} setClickValue={addString} />
+            <BaseButton name={'1'} background={'grey'} onClick={combiString} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'2'} background={'grey'} setClickValue={addString} />
+            <BaseButton name={'2'} background={'grey'} onClick={combiString} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'3'} background={'grey'} setClickValue={addString} />
+            <BaseButton name={'3'} background={'grey'} onClick={combiString} />
           </Grid>
           <Grid container item xs={12}>
             <Grid item xs={8} className={classes.btnPadding}>
-              <BaseButton name={'0'} background={'grey'} size={'lg'} setClickValue={addString} />
+              <BaseButton name={'0'} background={'grey'} size={'lg'} onClick={combiString} />
             </Grid>
             <Grid item xs={4} className={classes.btnPadding}>
-              <BaseButton name={'.'} background={'grey'} setClickValue={addString} />
+              <BaseButton name={'.'} background={'grey'} onClick={combiString} />
             </Grid>
           </Grid>
         </Grid>
         <Grid item container xs={3}>
             <Grid item xs={12} className={classes.btnPadding}>
-              <BaseButton name={'÷'} background={'orange'} setClickValue={setClickValue} />
+              <BaseButton name={'÷'} background={'orange'} onClick={formual} />
             </Grid>
             <Grid item xs={12} className={classes.btnPadding}>
-              <BaseButton name={'×'} background={'orange'} setClickValue={setClickValue} />
+              <BaseButton name={'×'} background={'orange'} onClick={formual} />
             </Grid>
             <Grid item xs={12} className={classes.btnPadding}>
-              <BaseButton name={'-'} background={'orange'} setClickValue={setClickValue} />
+              <BaseButton name={'-'} background={'orange'} onClick={formual} />
             </Grid>
             <Grid item xs={12} className={classes.btnPadding}>
-              <BaseButton name={'+'} background={'orange'} setClickValue={setClickValue} />
+              <BaseButton name={'+'} background={'orange'} onClick={formual} />
             </Grid>
             <Grid item xs={12} className={classes.btnPadding}>
-              <BaseButton name={'='} background={'orange'} setClickValue={setClickValue} />
+              <BaseButton name={'='} background={'orange'} onClick={formual} />
             </Grid>
           </Grid>
       </Grid>
