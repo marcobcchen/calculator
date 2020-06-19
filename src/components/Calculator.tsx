@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import Grid from '@material-ui/core/Grid'
 import { ThemeProvider } from '@material-ui/core/styles'
 import { makeStyles } from '@material-ui/core/styles'
@@ -6,7 +6,7 @@ import { makeStyles } from '@material-ui/core/styles'
 import theme from './theme'
 import BaseButton from './common/BaseButton'
 import Count from './common/Count'
-import { stringConcat, isNumber, add, cancel } from './common/logic'
+import * as logic from './common/logic'
 
 const usetStyles = makeStyles(theme => ({
   container: {
@@ -28,29 +28,44 @@ const usetStyles = makeStyles(theme => ({
 const Calculator = () => {
   const classes = usetStyles()
   const [result, setResult] = useState('0')
+  const [isZero, setIsZero] = useState(false)
   
   const reset = () => {
-    cancel()
+    logic.cancel()
     setResult('0')
   }
 
-  const formual = (value: string) => {
+  const formula = (value: string) => {
+    setIsZero(true)
     switch (value){
       case 'C':
         reset()
         break
       case '+':
-        add('test')
+        if(!isZero) setResult(logic.add())
+        break
+      case '-':
+        if(!isZero) setResult(logic.subtract())
+        break
+      case '×':
+        if(!isZero) setResult(logic.multiply())
+        break
+      case '÷':
+        if(!isZero) setResult(logic.divide())
         break
       case '=':
-        // setResult(add(result))
+        // setIsZero(false)
+        setResult(logic.equal())
         break
     }
   }
 
   const combiString = (num: string) => {
-    if(isNumber(num)) {
-      setResult(stringConcat(num, result))
+    if(isZero){
+      setIsZero(false)
+      setResult(logic.stringConcat(num, '0'))
+    }else{
+      setResult(logic.stringConcat(num, result))
     }
   }
 
@@ -62,13 +77,13 @@ const Calculator = () => {
         </Grid>
         <Grid item container xs={9}>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'C'} background={'lightGrey'} onClick={formual} />
+            <BaseButton name={'C'} background={'lightGrey'} onClick={formula} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'+/-'} background={'lightGrey'} onClick={formual} />
+            <BaseButton name={'+/-'} background={'lightGrey'} onClick={formula} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
-            <BaseButton name={'%'} background={'lightGrey'} onClick={formual} />
+            <BaseButton name={'%'} background={'lightGrey'} onClick={formula} />
           </Grid>
           <Grid item xs={4} className={classes.btnPadding}>
             <BaseButton name={'7'} background={'grey'} onClick={combiString} />
@@ -108,19 +123,19 @@ const Calculator = () => {
         </Grid>
         <Grid item container xs={3}>
             <Grid item xs={12} className={classes.btnPadding}>
-              <BaseButton name={'÷'} background={'orange'} onClick={formual} />
+              <BaseButton name={'÷'} background={'orange'} onClick={formula} />
             </Grid>
             <Grid item xs={12} className={classes.btnPadding}>
-              <BaseButton name={'×'} background={'orange'} onClick={formual} />
+              <BaseButton name={'×'} background={'orange'} onClick={formula} />
             </Grid>
             <Grid item xs={12} className={classes.btnPadding}>
-              <BaseButton name={'-'} background={'orange'} onClick={formual} />
+              <BaseButton name={'-'} background={'orange'} onClick={formula} />
             </Grid>
             <Grid item xs={12} className={classes.btnPadding}>
-              <BaseButton name={'+'} background={'orange'} onClick={formual} />
+              <BaseButton name={'+'} background={'orange'} onClick={formula} />
             </Grid>
             <Grid item xs={12} className={classes.btnPadding}>
-              <BaseButton name={'='} background={'orange'} onClick={formual} />
+              <BaseButton name={'='} background={'orange'} onClick={formula} />
             </Grid>
           </Grid>
       </Grid>
